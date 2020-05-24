@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import moment from 'moment';
-import { Layout, Row, Col, DatePicker, Button } from 'antd';
+import { Layout, Row, Col, Button, DatePicker } from 'antd';
+import UploadModal from './UploadModal';
 import View from './View';
 import Add from './Add';
 import './App.css';
@@ -37,6 +38,7 @@ const App = () => {
         <View />
         {mode === MODE[1] && <Add onClick={onSetMode} />}
       </Content>
+      <UploadModal />
     </Layout>
   );
 };
