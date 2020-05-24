@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Modal, Select, Input } from 'antd';
+import { questions } from '../data';
 const { Option } = Select;
 const { TextArea } = Input;
 
@@ -9,22 +10,22 @@ const Add = props => {
   return (
     <div>
       <Modal
-        title="Basic Modal"
+        title="Answer a question"
         visible={true}
+        width="800px"
+        okText="Save"
         onOk={props.onClick}
         onCancel={props.onClick}
       >
-        <>
-          <Select
-            defaultValue={question}
-            style={{ width: 120 }}
-            onChange={setQuestion}
-          >
-            <Option value="jack">Jack</Option>
-            <Option value="lucy">Lucy</Option>
-            <Option value="Yiminghe">yiminghe</Option>
-          </Select>
-        </>
+        <Select
+          placeholder="Select a question"
+          style={{ width: '100%', marginBottom: 20 }}
+          onChange={setQuestion}
+        >
+          {questions.map((question, index) => (
+            <Option value={++index}>{question}</Option>
+          ))}
+        </Select>
         <TextArea rows={10} onChange={setAnswer} />
       </Modal>
     </div>

@@ -21,8 +21,9 @@ const App = () => {
   }, []);
 
   return (
-    <Layout style={{minHeight: "100vh"}}>
+    <Layout style={{ minHeight: '100vh' }}>
       <Content style={{ padding: 50 }}>
+        <h1 style={{ marginBottom: 30, fontSize: 24 }}>Journaling</h1>
         <Row style={{ marginBottom: 30 }}>
           <DatePicker
             value={moment(date)}
