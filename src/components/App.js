@@ -36,7 +36,7 @@ const App = () => {
             + Anaswer
           </Button>
         </Row>
-        <View />
+        <View data={data[`${date}`]} />
         {mode === MODE[1] && <Add onClick={onSetMode} />}
       </Content>
       <UploadModal setData={setData} />

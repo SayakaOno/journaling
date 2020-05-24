@@ -14,13 +14,13 @@ const UploadModal = props => {
     },
     onChange(info) {
       if (info.file.status !== 'uploading') {
-        props.setData(info.file.response.content);
+        props.setData(JSON.parse(info.file.response.content));
       }
       if (info.file.status === 'done') {
         message.success(`${info.file.name} file uploaded successfully`);
         setTimeout(() => {
           setUploadFile(false);
-        }, 5000);
+        }, 3000);
       } else if (info.file.status === 'error') {
         message.error(`${info.file.name} file upload failed.`);
       }
