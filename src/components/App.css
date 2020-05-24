@@ -1,1 +1,23 @@
 @import '~antd/dist/antd.css';
+
+.ant-table-container table {
+  border-collapse: collapse;
+}
+.ant-table table th,
+.ant-table table td {
+  border: solid 1px #999;
+}
+.ant-table-container table tr > th:nth-child(2),
+.ant-table-container table tr > td:nth-child(2) {
+  width: 50%;
+}
+.ant-table-container table tr > th:nth-child(3),
+.ant-table-container table tr > td:nth-child(3),
+.ant-table-container table tr > th:nth-child(4),
+.ant-table-container table tr > td:nth-child(4) {
+  width: 10%;
+  text-align: center;
+}
+.ant-table-pagination.ant-pagination {
+  display: none;
+}
