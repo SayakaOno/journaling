@@ -3,10 +3,10 @@ import { Button, Upload, message, Modal } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import './App.css';
 
-const UploadModal = () => {
+const UploadModal = props => {
   const [uploadFile, setUploadFile] = useState(true);
 
-  const props = {
+  const modalProps = {
     name: 'file',
     action: 'http://localhost:8000/upload',
     headers: {
@@ -14,7 +14,7 @@ const UploadModal = () => {
     },
     onChange(info) {
       if (info.file.status !== 'uploading') {
-        console.log(info.file, info.fileList);
+        props.setData(info.file.response.content);
       }
       if (info.file.status === 'done') {
         message.success(`${info.file.name} file uploaded successfully`);
@@ -37,7 +37,7 @@ const UploadModal = () => {
     >
       <p>Please upload your file to add new answers to your records.</p>
       <div style={{ height: 80 }}>
-        <Upload {...props}>
+        <Upload {...modalProps}>
           <Button>
             <UploadOutlined /> Upload
           </Button>

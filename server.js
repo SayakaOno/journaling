@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var multer = require('multer');
 var cors = require('cors');
+var fs = require('fs');
 
 app.use(cors());
 
@@ -23,7 +24,9 @@ app.post('/upload', function(req, res) {
     } else if (err) {
       return res.status(500).json(err);
     }
-    return res.status(200).send(req.file);
+    fs.readFile(req.file.path, 'utf8', (err, data) => {
+      return res.status(200).send({ ...req.file, content: data });
+    });
   });
 });
 

@@ -12,6 +12,7 @@ const App = () => {
   const { Content } = Layout;
   const [mode, setMode] = useState(MODE[0]);
   const [date, setDate] = useState('');
+  const [data, setData] = useState({});
   const onSetMode = () => setMode(mode === MODE[0] ? MODE[1] : MODE[0]);
   useEffect(() => {
     let date = new Date();
@@ -38,7 +39,7 @@ const App = () => {
         <View />
         {mode === MODE[1] && <Add onClick={onSetMode} />}
       </Content>
-      <UploadModal />
+      <UploadModal setData={setData} />
     </Layout>
   );
 };
