@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import moment from 'moment';
-import { Layout, Row, Col, Button, DatePicker } from 'antd';
+import { Layout, Row, Button, DatePicker } from 'antd';
+import { DownloadOutlined } from '@ant-design/icons';
 import UploadModal from './UploadModal';
 import View from './View';
 import Add from './Add';
@@ -32,6 +33,15 @@ const App = () => {
     onSetMode(MODE[0]);
   };
 
+  const onDownload = async () => {
+    const url = window.URL.createObjectURL(new Blob([JSON.stringify(data)]));
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', 'file.json'); //or any other extension
+    document.body.appendChild(link);
+    link.click();
+  };
+
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Content style={{ padding: 50 }}>
@@ -47,6 +57,9 @@ const App = () => {
           </Button>
         </Row>
         <View data={data[`${date}`]} />
+        <Button type="primary" icon={<DownloadOutlined />} onClick={onDownload}>
+          Download
+        </Button>
         {mode === MODE[1] && <Add onClick={onSetMode} onSave={onSave} />}
       </Content>
       <UploadModal setData={setData} />
