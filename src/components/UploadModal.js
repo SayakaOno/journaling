@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Button, Upload, message, Modal } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import './App.css';

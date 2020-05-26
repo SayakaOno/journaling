@@ -42,6 +42,18 @@ const App = () => {
     link.click();
   };
 
+  const disabledDates = date => {
+    let availableDates = Object.keys(data);
+    return availableDates.length
+      ? !availableDates.includes(date.format('YYYY-MM-DD'))
+      : date.format('YYYY-MM-DD') !== today;
+  };
+
+  const setUpData = data => {
+    setData(data);
+    setDate(Object.keys(data)[0]);
+  };
+
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Content style={{ padding: 50 }}>
@@ -50,6 +62,7 @@ const App = () => {
           <DatePicker
             value={moment(date)}
             onChange={(date, dateString) => setDate(dateString)}
+            disabledDate={disabledDates}
             style={{ marginRight: 20 }}
           />
           <Button type="primary" size={10} onClick={onSetMode}>
@@ -68,7 +81,7 @@ const App = () => {
         ) : null}
         {mode === MODE[1] && <Add onClick={onSetMode} onSave={onSave} />}
       </Content>
-      <UploadModal setData={setData} />
+      <UploadModal setData={setUpData} />
     </Layout>
   );
 };
