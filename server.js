@@ -28,7 +28,12 @@ app.post('/upload', function(req, res) {
       return res.status(500).json(err);
     }
     fs.readFile(req.file.path, 'utf8', (err, data) => {
-      return res.status(200).send({ ...req.file, content: data });
+      try {
+        fs.unlinkSync(`src/${fileName}`);
+        return res.status(200).send({ ...req.file, content: data });
+      } catch (err) {
+        console.error(err);
+      }
     });
   });
 });
