@@ -27,7 +27,7 @@ const Add = props => {
         visible={true}
         width="800px"
         okText="Save"
-        onOk={onOk}
+        onOk={question && answer && onOk}
         onCancel={props.onClick}
       >
         <Select

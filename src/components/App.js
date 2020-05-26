@@ -37,7 +37,7 @@ const App = () => {
     const url = window.URL.createObjectURL(new Blob([JSON.stringify(data)]));
     const link = document.createElement('a');
     link.href = url;
-    link.setAttribute('download', 'file.json'); //or any other extension
+    link.setAttribute('download', 'journaling.json'); //or any other extension
     document.body.appendChild(link);
     link.click();
   };
@@ -57,9 +57,15 @@ const App = () => {
           </Button>
         </Row>
         <View data={data[`${date}`]} />
-        <Button type="primary" icon={<DownloadOutlined />} onClick={onDownload}>
-          Download
-        </Button>
+        {Object.keys(data).length ? (
+          <Button
+            icon={<DownloadOutlined />}
+            onClick={onDownload}
+            style={{ float: 'right' }}
+          >
+            Download
+          </Button>
+        ) : null}
         {mode === MODE[1] && <Add onClick={onSetMode} onSave={onSave} />}
       </Content>
       <UploadModal setData={setData} />
