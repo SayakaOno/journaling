@@ -31,6 +31,7 @@ const App = () => {
     todaysData.push(newData);
     setData({ ...data, [today]: todaysData });
     onSetMode(MODE[0]);
+    setDate(today);
   };
 
   const onDownload = async () => {
