@@ -52,7 +52,8 @@ const App = () => {
 
   const setUpData = data => {
     setData(data);
-    setDate(Object.keys(data)[0]);
+    let dates = Object.keys(data);
+    setDate(dates[dates.length - 1]);
   };
 
   return (
