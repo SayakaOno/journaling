@@ -71,7 +71,7 @@ const App = () => {
             + Anaswer
           </Button>
         </Row>
-        <View data={data[`${date}`]} />
+        <View data={data[`${date}`]} date={date} />
         {Object.keys(data).length ? (
           <Button
             icon={<DownloadOutlined />}
