@@ -3,7 +3,7 @@ import moment from 'moment';
 import { Table } from 'antd';
 import Record from '../components/Record';
 
-const getColumns = date => {
+const getColumns = (date, setSelectedRecord, setAudioData) => {
   let columns = [
     {
       title: 'Question',
@@ -37,7 +37,13 @@ const getColumns = date => {
   if (date === moment().format('YYYY-MM-DD')) {
     columns.push({
       title: 'Record',
-      render: audio => <Record />
+      render: data => (
+        <Record
+          dataKey={data.key}
+          setSelectedRecord={setSelectedRecord}
+          setAudioData={setAudioData}
+        />
+      )
     });
   }
   return columns;
@@ -47,7 +53,11 @@ const View = props => {
   return props.data ? (
     <Table
       dataSource={props.data}
-      columns={getColumns(props.date)}
+      columns={getColumns(
+        props.date,
+        props.setSelectedRecord,
+        props.setAudioData
+      )}
       style={{ marginBottom: 20 }}
     />
   ) : null;

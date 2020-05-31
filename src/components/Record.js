@@ -5,10 +5,10 @@ import { AudioOutlined, BorderOutlined } from '@ant-design/icons';
 
 const Record = props => {
   const [recording, setRecording] = useState(false);
-  const [audioData, setAudioData] = useState('');
 
   const startRecording = () => {
     setRecording(true);
+    props.setSelectedRecord(props.dataKey);
   };
 
   const stopRecording = () => {
@@ -16,12 +16,12 @@ const Record = props => {
   };
 
   const onData = recordedBlob => {
-    console.log('chunk of real-time data is: ', recordedBlob);
+    // console.log('chunk of real-time data is: ', recordedBlob);
   };
 
   const onStop = recordedBlob => {
-    console.log('recordedBlob is: ', recordedBlob);
-    setAudioData(recordedBlob.blobURL);
+    // console.log('recordedBlob is: ', recordedBlob);
+    props.setAudioData(recordedBlob.blobURL);
   };
 
   return (

@@ -15,6 +15,8 @@ const App = () => {
   const [today, setToday] = useState('');
   const [date, setDate] = useState('');
   const [data, setData] = useState({});
+  const [selectedRecord, setSelectedRecord] = useState('');
+  const [audioData, setAudioData] = useState('');
   const onSetMode = () => setMode(mode === MODE[0] ? MODE[1] : MODE[0]);
 
   useEffect(() => {
@@ -23,8 +25,15 @@ const App = () => {
     setDate(today);
   }, []);
 
+  useEffect(() => {
+    if (audioData) {
+      saveAudio();
+    }
+    setAudioData('');
+  }, [audioData]);
+
   const onSave = (question, answer, time) => {
-    let key = new Date();
+    let key = moment().format('YYYYMMDD-hhmmss');
     let words = answer.split(' ').length;
     let newData = { key, question, answer, words, time };
     let todaysData = data[`${today}`] ? data[`${today}`].slice() : [];
@@ -56,6 +65,21 @@ const App = () => {
     setDate(dates[dates.length - 1]);
   };
 
+  const saveAudio = () => {
+    let todaysData = data[`${today}`].slice();
+    let index = null;
+    for (let i = 0; i < todaysData.length; i++) {
+      if (todaysData[i].key === selectedRecord) {
+        index = i;
+      }
+    }
+    let targetData = todaysData[index];
+    let targetAudioData = targetData.audio ? targetData.audio : [];
+    targetAudioData.push({ [moment().format('hh:mm:ss')]: audioData });
+    targetData.audio = targetAudioData;
+    setData({ ...data, [today]: todaysData });
+  };
+
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Content style={{ padding: 50 }}>
@@ -71,7 +95,12 @@ const App = () => {
             + Anaswer
           </Button>
         </Row>
-        <View data={data[`${date}`]} date={date} />
+        <View
+          data={data[`${date}`]}
+          date={date}
+          setSelectedRecord={setSelectedRecord}
+          setAudioData={setAudioData}
+        />
         {Object.keys(data).length ? (
           <Button
             icon={<DownloadOutlined />}
