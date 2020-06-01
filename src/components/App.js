@@ -9,6 +9,7 @@ import Add from './Add';
 import './App.css';
 
 const MODE = ['View', 'Add'];
+const initialPlayState = { time: '', src: '' };
 
 const App = () => {
   const { Content } = Layout;
@@ -18,7 +19,7 @@ const App = () => {
   const [data, setData] = useState({});
   const [selectedRecord, setSelectedRecord] = useState('');
   const [audioData, setAudioData] = useState('');
-  const [play, setPlay] = useState('');
+  const [play, setPlay] = useState(initialPlayState);
   const onSetMode = () => setMode(mode === MODE[0] ? MODE[1] : MODE[0]);
 
   useEffect(() => {
@@ -36,7 +37,11 @@ const App = () => {
 
   const onSetDate = date => {
     setDate(date);
-    setPlay('');
+    resetPlay();
+  };
+
+  const resetPlay = () => {
+    setPlay(initialPlayState);
   };
 
   const onSave = (question, answer, time) => {
@@ -90,7 +95,13 @@ const App = () => {
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Content style={{ padding: 50 }}>
-        {play && <Audio src={play} />}
+        {play.src && (
+          <Audio
+            src={play.src}
+            file={`${date} ${play.time}`}
+            resetPlay={resetPlay}
+          />
+        )}
         <h1 style={{ marginBottom: 30, fontSize: 24 }}>Journaling</h1>
         <Row style={{ marginBottom: 30 }}>
           <DatePicker

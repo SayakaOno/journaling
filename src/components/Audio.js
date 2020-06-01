@@ -11,7 +11,6 @@ const Audio = props => {
         top: 0,
         right: 0,
         padding: 0,
-        paddingRight: 20,
         boxShadow: '-2px 2px 10px 0px #888888'
       }}
     >
@@ -23,8 +22,11 @@ const Audio = props => {
           color: '#8b8c8c',
           fontSize: 16
         }}
-        onClick={() => props.setPlay('')}
+        onClick={() => props.resetPlay()}
       />
+      <h2 style={{ position: 'absolute', top: 5, left: 10, zIndex: 1 }}>
+        {props.file}
+      </h2>
       <audio controls src={props.src} type="audio/ogg" />
     </Card>
   );

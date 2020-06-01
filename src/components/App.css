@@ -31,6 +31,7 @@
 }
 .ant-card-body {
   padding: 0;
+  padding-top: 30px;
 }
 audio:focus {
   outline: none;

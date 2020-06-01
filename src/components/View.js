@@ -32,11 +32,6 @@ const getColumns = (date, setSelectedRecord, setAudioData, setPlay) => {
       render: audio => {
         return audio
           ? audio.map(data => {
-              // console.log(
-              //   data,
-              //   `${Object.keys(data)[0]}`,
-              //   data[`${Object.keys(data)[0]}`]
-              // );
               return (
                 <Tooltip
                   key={Object.keys(data)[0]}
@@ -49,7 +44,12 @@ const getColumns = (date, setSelectedRecord, setAudioData, setPlay) => {
                       color: 'purple',
                       cursor: 'pointer'
                     }}
-                    onClick={() => setPlay(data[`${Object.keys(data)[0]}`])}
+                    onClick={() =>
+                      setPlay({
+                        time: Object.keys(data)[0],
+                        src: data[`${Object.keys(data)[0]}`]
+                      })
+                    }
                   >
                     {Object.keys(data)[0].slice(0, 5)}
                   </div>
