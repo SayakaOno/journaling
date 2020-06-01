@@ -1,9 +1,9 @@
 import React from 'react';
 import moment from 'moment';
-import { Table } from 'antd';
+import { Table, Tooltip } from 'antd';
 import Record from '../components/Record';
 
-const getColumns = (date, setSelectedRecord, setAudioData) => {
+const getColumns = (date, setSelectedRecord, setAudioData, setPlay) => {
   let columns = [
     {
       title: 'Question',
@@ -30,7 +30,33 @@ const getColumns = (date, setSelectedRecord, setAudioData) => {
       dataIndex: 'audio',
       key: 'audio',
       render: audio => {
-        return audio ? <audio controls src={audio} type="audio/ogg" /> : null;
+        return audio
+          ? audio.map(data => {
+              // console.log(
+              //   data,
+              //   `${Object.keys(data)[0]}`,
+              //   data[`${Object.keys(data)[0]}`]
+              // );
+              return (
+                <Tooltip
+                  key={Object.keys(data)[0]}
+                  placement="topLeft"
+                  title="play"
+                >
+                  <div
+                    style={{
+                      textDecoration: 'underline',
+                      color: 'purple',
+                      cursor: 'pointer'
+                    }}
+                    onClick={() => setPlay(data[`${Object.keys(data)[0]}`])}
+                  >
+                    {Object.keys(data)[0].slice(0, 5)}
+                  </div>
+                </Tooltip>
+              );
+            })
+          : null;
       }
     }
   ];
@@ -56,7 +82,8 @@ const View = props => {
       columns={getColumns(
         props.date,
         props.setSelectedRecord,
-        props.setAudioData
+        props.setAudioData,
+        props.setPlay
       )}
       style={{ marginBottom: 20 }}
     />

@@ -29,3 +29,9 @@
 .sound-wave {
   display: none;
 }
+.ant-card-body {
+  padding: 0;
+}
+audio:focus {
+  outline: none;
+}

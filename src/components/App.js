@@ -4,6 +4,7 @@ import { Layout, Row, Button, DatePicker } from 'antd';
 import { DownloadOutlined } from '@ant-design/icons';
 import UploadModal from './UploadModal';
 import View from './View';
+import Audio from './Audio';
 import Add from './Add';
 import './App.css';
 
@@ -17,12 +18,13 @@ const App = () => {
   const [data, setData] = useState({});
   const [selectedRecord, setSelectedRecord] = useState('');
   const [audioData, setAudioData] = useState('');
+  const [play, setPlay] = useState('');
   const onSetMode = () => setMode(mode === MODE[0] ? MODE[1] : MODE[0]);
 
   useEffect(() => {
     let today = moment().format('YYYY-MM-DD');
     setToday(today);
-    setDate(today);
+    onSetDate(today);
   }, []);
 
   useEffect(() => {
@@ -32,15 +34,20 @@ const App = () => {
     setAudioData('');
   }, [audioData]);
 
+  const onSetDate = date => {
+    setDate(date);
+    setPlay('');
+  };
+
   const onSave = (question, answer, time) => {
-    let key = moment().format('YYYYMMDD-hhmmss');
+    let key = moment().format('YYYYMMDD-HHmmss');
     let words = answer.split(' ').length;
     let newData = { key, question, answer, words, time };
     let todaysData = data[`${today}`] ? data[`${today}`].slice() : [];
     todaysData.push(newData);
     setData({ ...data, [today]: todaysData });
     onSetMode(MODE[0]);
-    setDate(today);
+    onSetDate(today);
   };
 
   const onDownload = async () => {
@@ -62,7 +69,7 @@ const App = () => {
   const setUpData = data => {
     setData(data);
     let dates = Object.keys(data);
-    setDate(dates[dates.length - 1]);
+    onSetDate(dates[dates.length - 1]);
   };
 
   const saveAudio = () => {
@@ -75,7 +82,7 @@ const App = () => {
     }
     let targetData = todaysData[index];
     let targetAudioData = targetData.audio ? targetData.audio : [];
-    targetAudioData.push({ [moment().format('hh:mm:ss')]: audioData });
+    targetAudioData.push({ [moment().format('HH:mm:ss')]: audioData });
     targetData.audio = targetAudioData;
     setData({ ...data, [today]: todaysData });
   };
@@ -83,11 +90,12 @@ const App = () => {
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Content style={{ padding: 50 }}>
+        {play && <Audio src={play} />}
         <h1 style={{ marginBottom: 30, fontSize: 24 }}>Journaling</h1>
         <Row style={{ marginBottom: 30 }}>
           <DatePicker
             value={moment(date)}
-            onChange={(date, dateString) => setDate(dateString)}
+            onChange={(date, dateString) => onSetDate(dateString)}
             disabledDate={disabledDates}
             style={{ marginRight: 20 }}
           />
@@ -100,6 +108,7 @@ const App = () => {
           date={date}
           setSelectedRecord={setSelectedRecord}
           setAudioData={setAudioData}
+          setPlay={setPlay}
         />
         {Object.keys(data).length ? (
           <Button
