@@ -7,11 +7,12 @@ const Audio = props => {
     <Card
       style={{
         background: '#f0f2f5',
-        position: 'absolute',
+        position: 'fixed',
         top: 0,
         right: 0,
         padding: 0,
-        boxShadow: '-2px 2px 10px 0px #888888'
+        boxShadow: '-2px 2px 10px 0px #888888',
+        zIndex: 1
       }}
     >
       <CloseOutlined
